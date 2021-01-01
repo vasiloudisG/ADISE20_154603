@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
   <head>
     <meta charset="utf-8">
     <title>Score 4</title>
     <link rel="stylesheet" href="connect4.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="connect4.js"></script>
+
   </head>
   <body>
     <h1>Score 4</h1>
@@ -12,7 +15,7 @@
     </div>
     <br>
     <div class="info" id="game">
-      Enter your name: <input type="text" id="name"><br>
+      Enter your name: <input type="text" id="username"><br>
       Select your color: <select id="piece_color">
             <option value="R">R</option>
             <option value="Y">Y</option>

@@ -1,4 +1,4 @@
-var me = { username: null, piece_color: null };
+var me = { username: null, token: null, piece_color: null };
 
 $(function() {
     draw_empty_board();
@@ -6,7 +6,7 @@ $(function() {
       $('#log_in_button').click(login_to_game);
 
 
-})
+});
 
 function draw_empty_board() {
 	var board= '<table id="score4_table">';
@@ -14,7 +14,7 @@ function draw_empty_board() {
 		board += '<tr>';
 		for(var j=1;j<8;j++) {
 			board += '<td class="score4_square" id="square_'+j+'_'+i+'">' + j +','+i+'</td>';
-		}
+		}console.log("=/");
 		board+='</tr>';
 	}
 	board+='</table>';
@@ -88,3 +88,4 @@ function reset_game() {
         headers: { "X-Token": me.token },
         success: draw_the_board
     });
+	}
