@@ -1,22 +1,32 @@
 var me = { username: null, piece_color: null };
 
+$(function() {
+    draw_empty_board();
+
+      $('#log_in_button').click(login_to_game);
+
+
+})
+
 function draw_empty_board() {
-	var table='<table id="score4_table">';
+	var board= '<table id="score4_table">';
 	for(var i=6;i>0;i--) {
-		table += '<tr>';
+		board += '<tr>';
 		for(var j=1;j<8;j++) {
-			table += '<td class="score4_square" id="square_'+j+'_'+i+'">' + j +','+i+'</td>';
+			board += '<td class="score4_square" id="square_'+j+'_'+i+'">' + j +','+i+'</td>';
 		}
-		table+='</tr>';
+		board+='</tr>';
 	}
-	table+='</table>';
-	$('#score4_board').html(table);
+	board+='</table>';
+	$('#board').html(board);
 }
 
 function fill_board() {
 	$.ajax(
-	   {url: "connect4.php/board",
+	  {url: "connect4.php/board",
 		method: 'GET',
+		dataType: 'json',
+		headers: { "X-Token": me.token },
 		success:fill_board_data
 		}
 		);
@@ -69,3 +79,12 @@ function login_result(data) {
 	//Ενημερώνουμε το info_div.
 	//ξεκινάμε το παιχνίδι.
 }
+
+function reset_game() {
+
+    $.ajax({
+        url: "connect4.php/board/reset/",
+        method: 'POST',
+        headers: { "X-Token": me.token },
+        success: draw_the_board
+    });
