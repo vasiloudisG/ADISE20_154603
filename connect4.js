@@ -47,6 +47,7 @@ function login_to_game() {
 	$.ajax({url: "connect4.php/players/",
 		method: 'PUT',
 		dataType: "json",
+		headers: { "X-Token": me.token },
 		contentType: 'application/json',
 		data: JSON.stringify( {username:$('#username').val(),piece_color: $('#piece_color').val() }),
 		success: login_result,
