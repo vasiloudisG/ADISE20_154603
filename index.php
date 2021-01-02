@@ -35,6 +35,7 @@
         <option value="7">7</option>
     </select>
     <button type="button" id="play_button">PLAY</button>
+    <button type="button" id="reset_button">RESET</button>
   </div>
   </body>
 </html>

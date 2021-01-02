@@ -16,7 +16,10 @@ if (isset($_SERVER['HTTP_X_TOKEN'])) {
 //sumfona me ta parapanw epilegoume thn katallhlh methodo apo to swsto db/ .
 switch ($r=array_shift($request)) {
   case 'board':
-      switch $b=array_shift($request)) {
+      switch ($b=array_shift($request)) {
+          case 'reset':
+                   reset_board();
+                   break;
           case '':
           case null: handle_board($method,$input);
                    break;
@@ -26,7 +29,7 @@ switch ($r=array_shift($request)) {
                    break;
                 }
               break;
-  case 'players': handle_player($method, $request,$input);
+  case 'players': handle_player($method,$input);
               break;
 
    case 'game_status':
@@ -55,8 +58,8 @@ function handle_piece($method, $x,$y,$input) {
 	         }
 }
 
-function handle_player($method, $p,$input) {
-
+function handle_player($method,$input) {
+    manage_player($method, $input);
 }
 
 
