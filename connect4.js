@@ -5,6 +5,7 @@ $(function() {
 
       $('#log_in_button').click(login_to_game);
       $('#reset_button').click(reset_game);
+      $('#play_button').click(play);
 }
 );
 
@@ -13,7 +14,7 @@ function draw_empty_board() {
 	for(var i=6;i>0;i--) {
 		board += '<tr>';
 		for(var j=1;j<8;j++) {
-			board += '<td class="score4_square" id="square_'+j+'_'+i+'">' + j +','+i+'</td>';
+			board += '<td class="score4_box" id="box_'+i+'_'+j+'">' + i +','+j+'</td>';
 		}
 		//console.log("=/");
 		board+='</tr>';
@@ -36,7 +37,7 @@ function fill_board() {
 function fill_board_data(data) {
     for (var i=0; i<data.length; i++) {
         var box = data[i];
-        var id = '#square_' + box.x + '_' + box.y;
+        var id = '#box_' + box.x + '_' + box.y;
         if (box.piece_color == 'R') {
             $(id).css('background-color', 'red');
         }
@@ -66,14 +67,16 @@ function login_to_game() {
 }
 
 function login_error(data) {
-    var x = data.responseJSON.errormesg;
-    alert(x);
+    var x = data;//.responseJSON.errormesg;
+    console.log(x);
+  //  alert(x);
 	// Εάν συνέβη λάθος, εμφανίζουμε το μήνυμα λάθους.
 }
 
 function login_result(data) {
 	me = data[0];
 	$('#game').hide();
+  alert("Welcome "+$('#username').val());
   console.log(data);
 	//update_info();
 	//game_start();
@@ -83,7 +86,6 @@ function login_result(data) {
 }
 
 function reset_game() {
-
     $.ajax({
         url: "connect4.php/board/reset/",
         method: 'POST',
@@ -94,3 +96,23 @@ function reset_game() {
       me = { username: null, token: null, piece_color: null };
       $('#game').show();
 	}
+
+  function play(){
+    var $move = $('#column_pick').val();
+
+    $.ajax({
+        url: "connect4.php/board/piece/",
+        method: 'PUT',
+        dataType: 'json',
+        headers: { "X-Token": me.token },
+        contentType: 'application/json',
+        data: JSON.stringify({ move: $move, piece_color: me.piece_color }),
+        success: result_move,
+        error: login_error
+    });
+  }
+
+  function result_move(data) {
+    fill_board();
+
+}

@@ -15,7 +15,7 @@
     </div>
     <br>
     <div class="info" id="game">
-      Enter your name: <input type="text" id="username"><br>
+      Enter your username: <input type="text" id="username"><br>
       Select your color: <select id="piece_color">
             <option value="R">R</option>
             <option value="Y">Y</option>
@@ -25,7 +25,7 @@
 <br>
 	<div class="move_pick" id="move_pick">
     Select the column to insert the piece:
-    <select id="colum_pick">
+    <select id="column_pick">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>

@@ -34,8 +34,8 @@ button {
  font-size: 16px;
 }
 #score4_table TD {
-    width: 4em;
-    height: 4em;
+    width: 5em;
+    height: 5em;
     border: 2px solid black;
     text-align: center;
 }
