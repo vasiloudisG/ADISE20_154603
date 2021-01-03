@@ -11,7 +11,7 @@ $(function() {
 
 function draw_empty_board() {
 	var board= '<table id="score4_table">';
-	for(var i=6;i>0;i--) {
+	for(var i=1;i<7;i++) {
 		board += '<tr>';
 		for(var j=1;j<8;j++) {
 			board += '<td class="score4_box" id="box_'+i+'_'+j+'">' + i +','+j+'</td>';
@@ -67,9 +67,9 @@ function login_to_game() {
 }
 
 function login_error(data) {
-    var x = data;//.responseJSON.errormesg;
+    var x = data.responseJSON.errormesg;
     console.log(x);
-  //  alert(x);
+    alert(x);
 	// Εάν συνέβη λάθος, εμφανίζουμε το μήνυμα λάθους.
 }
 
