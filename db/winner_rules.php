@@ -132,7 +132,7 @@ function check_winner(){
     $sql = "update game_status set status='ended', result='Y',p_turn=null where p_turn is not null and status='started'";
     $st = $mysqli->prepare($sql);
     $r = $st->execute();
-  }console.log(data);
+  }
   else{
     //An den exei kerdisei kaneis akoma
     return;

@@ -2,7 +2,7 @@ var me = { username: null, token: null, piece_color: null };
 
 $(function() {
     draw_empty_board();
-
+      $('#move_pick').hide();
       $('#log_in_button').click(login_to_game);
       $('#reset_button').click(reset_game);
       $('#play_button').click(play);
@@ -67,9 +67,10 @@ function login_to_game() {
 }
 
 function login_error(data) {
-    var x = data.responseJSON.errormesg;
-    console.log(x);
-    alert(x);
+    //var x = data.responseJSON.errormesg;
+    console.log(data);
+     
+    //alert(x);
 	// Εάν συνέβη λάθος, εμφανίζουμε το μήνυμα λάθους.
 }
 
@@ -77,6 +78,7 @@ function login_result(data) {
 	me = data[0];
 	$('#game').hide();
   alert("Welcome "+$('#username').val());
+  $('#move_pick').show();
   console.log(data);
 	//update_info();
 	//game_start();
@@ -115,4 +117,13 @@ function reset_game() {
   function result_move(data) {
     fill_board();
 
+}
+
+function update_game_status() {
+    clearTimeout(timer);
+    $.ajax({
+        url: "connect4.php/status/",
+        headers: { "X-Token": me.token },
+        success: update_status
+    });
 }

@@ -33,6 +33,19 @@ function move_board_piece($input){
 		$column_pick = $input['move'];
 		$piece_color = $input['piece_color'];
 		global $mysqli;
+
+  //Elegxw an h sthlh einai gemath.
+  $sql = 'select count(*) as count from board where y=? and piece_color is not null';
+  $st = $mysqli->prepare($sql);
+  $st->bind_param('i',$column_pick);
+  $st->execute();
+  $res = $st->get_result();
+  $r = $res->fetch_all(MYSQLI_ASSOC);
+  if($r[0]['count']==6) {
+    header("HTTP/1.1 400 Bad Request");
+    print json_encode(['errormesg'=>"This column is already full. Please select another column."]);
+    exit;
+  }
 		$sql = 'call `play`(?,?);';
 		$st = $mysqli->prepare($sql);
 		$st->bind_param('is', $column_pick, $piece_color);
