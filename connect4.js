@@ -1,11 +1,15 @@
 var me = { username: null, token: null, piece_color: null };
+var timer = null;
 
 $(function() {
     draw_empty_board();
-      $('#move_pick').hide();
+      //$('#move_pick').hide();
       $('#log_in_button').click(login_to_game);
       $('#reset_button').click(reset_game);
       $('#play_button').click(play);
+      update_game_status();
+
+
 }
 );
 
@@ -69,7 +73,7 @@ function login_to_game() {
 function login_error(data) {
     //var x = data.responseJSON.errormesg;
     console.log(data);
-     
+
     //alert(x);
 	// Εάν συνέβη λάθος, εμφανίζουμε το μήνυμα λάθους.
 }
@@ -81,7 +85,7 @@ function login_result(data) {
   $('#move_pick').show();
   console.log(data);
 	//update_info();
-	//game_start();
+	update_game_status();
 	//Εάν ΔΕΝ συνέβη λάθος, κρατάμε την global μεταβλητή me (την ορίσαμε αρχικά στο .js).
 	//Ενημερώνουμε το info_div.
 	//ξεκινάμε το παιχνίδι.
@@ -97,6 +101,7 @@ function reset_game() {
       $('#username').val("");
       me = { username: null, token: null, piece_color: null };
       $('#game').show();
+      update_game_status();
 	}
 
   function play(){
@@ -115,6 +120,7 @@ function reset_game() {
   }
 
   function result_move(data) {
+    update_game_status();
     fill_board();
 
 }
@@ -122,8 +128,42 @@ function reset_game() {
 function update_game_status() {
     clearTimeout(timer);
     $.ajax({
-        url: "connect4.php/status/",
+        url: "connect4.php/game_status/",
         headers: { "X-Token": me.token },
-        success: update_status
+        success: update_status,
+        error: login_error
     });
+}
+
+function update_status(data){
+  p_turn = data[0].p_turn;
+  status = data[0].status;
+  fill_board();
+  // if (game_status.status == 'aborted') {
+  //     $('#gamepad').hide(2000);
+  //     timer = setTimeout(function() { update_game_status(); }, 4000);
+      if (status == 'ended') {
+          // $('#game').hide(1000);
+          if (data[0].result=='R') {
+            alert("Red Won!");
+          }else if(data[0].result=='Y'){
+            alert("Yellow Won!");
+          }
+          timer = setTimeout(function() {
+             update_game_status();
+             reset_game();
+           }, 5000);
+      } else if (p_turn == me.piece_color && me.piece_color != null) {
+          $('#game').show(1000);
+          document.getElementById("play_button").disabled = false;
+          timer = setTimeout(function() {
+             update_game_status();
+           }, 10000);
+      } else {
+          // $('#game').hide(1000);
+          timer = setTimeout(function() {
+             update_game_status();
+           }, 4000);
+      }
+
 }

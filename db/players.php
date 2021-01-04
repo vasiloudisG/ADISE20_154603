@@ -23,7 +23,7 @@ function show_player($piece_color){
 //epistrofh twn paiktwn pou uparxoun vash
 function show_players(){
     global $mysqli;
-    $sql = 'select count(*) as players from players where nickname is not null';
+    $sql = 'select count(*) as p from players where username is not null';
     $st = $mysqli->prepare($sql);
     $st->execute();
     $res = $st->get_result();
@@ -70,7 +70,7 @@ function create_player($input){
     $st3->bind_param('sss', $username, $username, $piece_color);
     $st3->execute();
 
-    //update_status();
+    update_game_status();
     $sql4 = 'select * from players where piece_color=?';
     $st4 = $mysqli->prepare($sql4);
     $st4->bind_param('s', $piece_color);

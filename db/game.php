@@ -36,29 +36,28 @@ function read_status() {
 
 function update_game_status() {
 	global $mysqli;
+  $status = read_status();
+  $new_status = null;
+  $p_turn = null;
 
-	$status = read_status();
-	$new_status=null;
-	$new_turn=null;
-
-	$st3=$mysqli->prepare('select count(*) as aborted from players WHERE last_action< (NOW() - INTERVAL 15 MINUTE)');
-	$st3->execute();
-	$res3 = $st3->get_result();
-	$aborted = $res3->fetch_assoc()['aborted'];
+  $sql = 'select count(*) as aborted from players where last_change<(NOW() - INTERVAL 20 MINUTE)';
+  $stmt = $mysqli->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $aborted = $result->fetch_assoc()['aborted'];
 	if($aborted>0) {
-		$sql = "UPDATE players SET username=NULL, token=NULL WHERE last_action< (NOW() - INTERVAL 15 MINUTE)";
-		$st2 = $mysqli->prepare($sql);
-		$st2->execute();
+    $stmt2 = $mysqli->prepare("UPDATE players SET nickname=NULL, token=NULL WHERE last_change<(NOW()-INTERVAL 20 MINUTE)");
+    $stmt2->execute();
 		if($status['status']=='started') {
 			$new_status='aborted';
 		}
-	}
+  }
 
-  $sql = 'select count(*) as count from players where username is not null';
-  	$st = $mysqli->prepare($sql);
-  	$st->execute();
-  	$res = $st->get_result();
-  	$active_players = $res->fetch_assoc()['count'];
+    // $sql = 'select count(*) as count from players where username is not null';
+  	// $st = $mysqli->prepare($sql);
+  	// $st->execute();
+  	// $res = $st->get_result();
+  	$active_players = show_players();
 
   	switch($active_players) {
   		case 0: $new_status='not active'; break;
