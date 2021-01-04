@@ -4,6 +4,7 @@ require_once "db/dbconnect.php";
 require_once "db/board.php";
 require_once "db/players.php";
 require_once "db/game.php";
+require_once "db/winner_rules.php";
 
 //??
 $method = $_SERVER['REQUEST_METHOD'];
