@@ -140,7 +140,7 @@ function update_status(data){
   status = data[0].status;
   fill_board();
   // if (game_status.status == 'aborted') {
-  //     $('#gamepad').hide(2000);
+  //     $('#game').hide(2000);
   //     timer = setTimeout(function() { update_game_status(); }, 4000);
       if (status == 'ended') {
           // $('#game').hide(1000);
@@ -154,13 +154,11 @@ function update_status(data){
              reset_game();
            }, 5000);
       } else if (p_turn == me.piece_color && me.piece_color != null) {
-          $('#game').show(1000);
           document.getElementById("play_button").disabled = false;
           timer = setTimeout(function() {
              update_game_status();
            }, 10000);
       } else {
-          // $('#game').hide(1000);
           timer = setTimeout(function() {
              update_game_status();
            }, 4000);
