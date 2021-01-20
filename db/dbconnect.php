@@ -5,8 +5,6 @@ $host='localhost';
 $db = 'connect4';
 $user=$DB_USER;
 $pass=$DB_PASS;
-global $mysqli;
-$mysqli = new mysqli($host, $user, $pass, $db);
 
 if(gethostname()=='users.iee.ihu.gr') {
 	$mysqli = new mysqli($host, $user, $pass, $db,null,'/home/student/it/2015/it154603/mysql/run/mysql.sock');
