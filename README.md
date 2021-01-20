@@ -22,7 +22,7 @@ Table of Contents
 # Demo Page
 
 Μπορείτε να κατεβάσετε τοπικά ή να επισκευτείτε την σελίδα:
-https://users.iee.ihu.gr/~it154603/connect4
+https://users.iee.ihu.gr/~it154603/ADISE20_154603
 
 
 
